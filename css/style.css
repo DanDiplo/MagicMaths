@@ -1,0 +1,16 @@
+
+#answer {
+    display: none;
+}
+
+.card {
+    background-color: #FDEBD0;
+    border: 5px solid #873600;
+    border-radius: 10px;
+    padding: 10px;
+    margin:20px 0;
+}
+
+    .card h1 {
+        font-size: 6rem;
+    }

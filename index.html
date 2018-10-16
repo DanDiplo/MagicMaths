@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/skeleton.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>Magic Maths Question Generator</title>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+
+            <div class="row">
+                <div class="eight columns">
+
+                    <div class="card">
+                        <h1><span v-html="question.sum"></span> = <span id="answer"> {{ question.answer }}</span></h1>
+                        <button class="button" id="reveal-button" v-on:click="revealAnswer">Reveal</button>
+                    </div>
+                    <p>
+                        <button class="button button-primary" v-on:click="getQuestion">Next Question</button>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+
+</body>
+</html>
