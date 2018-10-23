@@ -8,3 +8,9 @@ Currently very much an experiment and work-in-progress (and also acts as a testi
 ## Details
 
 You can configure a list of answers (that can correspond to the answers on the physical cards in the actual Magic Maths game) and this will generate random maths questions for each of those answers.
+
+##Try it Out
+
+A very alpha version (that generates random questions based on a fixed list of answers) can be seen at:
+
+https://www.diplo.co.uk/magicmaths/
