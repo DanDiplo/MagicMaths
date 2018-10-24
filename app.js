@@ -14,23 +14,15 @@
                 answer: 0
             },
             answers: [
-                2,
-                1,
-                12,
-                40,
-                5,
-                10,
-                16,
-                20,
-                8,
-                3,
-                23
+                // these are the fixed answers you want to be the answer to the generated math question
+                14, 10, 23, 33, 2, 6, 0, 12, 7, 3, 1, 12, 9, 40, 1, 8, 15, 8, 6, 12, 10, 18, 2, 20, 3, 4, 4, 9, 7
             ],
             queries: [
                 // these are added in the Created() function
             ],
             answerIndex: 0
         },
+
         methods: {
 
             // Gets the next randomly generated question
@@ -51,17 +43,19 @@
                 return this.answers[this.answerIndex++];
             },
 
-            // Generates a random maths query
+            // Selects a random maths query
             generateQuestion: function (answer) {
-                var query = this.queries[getRandomInt(0, this.queries.length - 1)];
+                var query = getWeightRandomQuestion(this.queries);
                 return query(answer);
             },
 
             // Generates an addition question
             generateAdditionQuestion: function (answer) {
-                if (answer === 1) {
+                if (answer === 1)
                     return "1 + 0";
-                }
+
+                if (answer === 0)
+                    return "0 + 0";
 
                 var components = getRandomInt(2, this.config.maths.maxAdditionComponents);
                 var numbers = getAdditionParts(answer, components, 2);
@@ -122,15 +116,17 @@
                 }
             }
         },
+
         created: function () {
 
-            // Add the question generation queries
-            this.queries.push(this.generateAdditionQuestion);
-            this.queries.push(this.generateMultiplicationQuestion);
-            this.queries.push(this.generateSubtractionQuestion);
-            this.queries.push(this.generateDivisionQuestion);
+            // Add the question generation queries and gives each a weighted probability of being picked
+            // ie. there is a 35% chance of a question being addition, but only 10% chance of being division
+            this.queries.push({ q: this.generateAdditionQuestion, w: 0.35 });
+            this.queries.push({ q: this.generateMultiplicationQuestion, w: 0.25 });
+            this.queries.push({ q: this.generateSubtractionQuestion, w: 0.3 });
+            this.queries.push({ q: this.generateDivisionQuestion, w: 0.1 });
 
-            // Shuffle the answers
+            // Shuffle the answers so they are selected in random order
             shuffleArray(this.answers);
 
             // get first question
@@ -176,6 +172,15 @@
             var temp = array[i];
             array[i] = array[j];
             array[j] = temp;
+        }
+    }
+
+    function getWeightRandomQuestion(questions) {
+        var i, sum = 0, r = Math.random();
+
+        for (i in questions) {
+            sum += questions[i].w;
+            if (r <= sum) return questions[i].q;
         }
     }
 
